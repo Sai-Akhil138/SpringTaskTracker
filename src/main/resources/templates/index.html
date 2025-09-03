@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Tracker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3">Task Tracker</h1>
+    <a href="/tasks/new" class="btn btn-primary">+ Add Task</a>
+</div>
+
+<table class="table table-hover table-bordered">
+    <thead class="table-light">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th class="text-center">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.title}"></td>
+        <td th:text="${task.description}"></td>
+        <td>
+            <span th:text="${task.status}" class="badge bg-secondary"></span>
+        </td>
+        <td class="text-center">
+            <a th:href="@{'/tasks/edit/' + ${task.id}}" class="btn btn-sm btn-warning">Edit</a>
+            <a th:href="@{'/tasks/delete/' + ${task.id}}" class="btn btn-sm btn-danger"
+               onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+
+            <div class="btn-group btn-group-sm ms-2">
+                <a th:href="@{'/tasks/status/' + ${task.id} + '/NOT_STARTED'}" class="btn btn-outline-secondary">Not Started</a>
+                <a th:href="@{'/tasks/status/' + ${task.id} + '/IN_PROGRESS'}" class="btn btn-outline-info">In Progress</a>
+                <a th:href="@{'/tasks/status/' + ${task.id} + '/DONE'}" class="btn btn-outline-success">Done</a>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
